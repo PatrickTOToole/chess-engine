@@ -16,7 +16,7 @@ class Piece(ABC):
     
     @abstractmethod
     def can_move(self, target):
-        return False
+        return False, False
     @abstractmethod
     def creates_passant(self, target):
         return False
@@ -32,7 +32,8 @@ class Piece(ABC):
     def move(self, target):
         if self.is_pinned:
             return False
-        if self.can_move(target):
+        canMove, cap = self.can_move(target)
+        if canMove:
             if self.creates_passant(target):
                 inc = 0
                 if self.team == Team.BLACK:
@@ -53,7 +54,7 @@ class Piece(ABC):
             self.setAttacking(target)
             self.has_moved = True
             self.gameboard.updateUI()
-            return True
+            return True, cap
         else:
-            return False
+            return False, False
     

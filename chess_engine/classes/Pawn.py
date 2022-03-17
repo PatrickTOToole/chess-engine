@@ -14,24 +14,24 @@ class Pawn(Piece):
 
         # Check if it is a valid au Passant
         if self.is_passant(target):
-            return True
+            return True, True
 
         # Check if it is a valid standard attack move
         if target.piece != None and target.piece.team != self.team and not self.is_pinned:
             if target.row == self.curr.row + inc and abs(ord(target.col) - ord(self.curr.col)) == 1:
                 if 0 < target.row <= 8 and 97 <= ord(self.curr.col) + ord(target.col) - ord(self.curr.col) < 105:
-                    return True
+                    return True, True
 
 
         # Check if it is a valid 2 step move
         if self.creates_passant(target):
-            return True
+            return True, False
         
         # Check if it is a valid 1 step move
         if target.col == self.curr.col and target.row == self.curr.row + inc and target.piece == None:
             if 0 < self.curr.row + 1*inc <= 8:
-                return True
-        return False
+                return True, False
+        return False, False
 
     def setAttacking(self, target):
         inc = 0
@@ -83,4 +83,3 @@ class Pawn(Piece):
         return self.team_str + "P"
     def __repr__(self):
         return "P"
-        

@@ -10,6 +10,7 @@ logfile = open("log", "w+")
 
 def doMove(move_count, move_record, team):
     res = False
+    cap = False
     while(not res):
         if team == Team.BLACK:
             team_str = "black"
@@ -21,8 +22,12 @@ def doMove(move_count, move_record, team):
         if pieceRef == None or pieceRef.team != team:
             continue
         target = gameboard.getSpaceAt(m[1])
-        res = pieceRef.move(target)
-    move_record[move_count].append(move)
+        res, cap = pieceRef.move(target)
+    if cap:
+        mid = "x"
+    else:
+        mid = "-"
+    move_record[move_count].append(m[0] + mid + m[1])
     if gameboard.passant != None and gameboard.passant.passant_piece != None:
         if gameboard.passant.passant_piece.team != team:
             gameboard.passant.resetPassant()
@@ -31,6 +36,8 @@ def doMove(move_count, move_record, team):
     if team == Team.BLACK:
         logfile.write(f"{move_count}: {move_record[move_count][0]} {move_record[move_count][1]}\n")
         move_count += 1
+
+
     return move_count, move_record
 
 def task(move_count, move_record):

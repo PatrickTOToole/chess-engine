@@ -3,13 +3,14 @@ from chess_engine.classes import Pawn
 
 
 class Space:
-    def __init__(self, col, row):
+    def __init__(self, col, row, color):
         self.col = col
         self.row = row
         self.piece = None
         self.isPassant = False
         self.isAttacked = False
         self.passant_piece = None
+        self.color = color
     
     def setPiece(self, piece):
         if piece != None and piece.team == Team.BLACK and type(piece) == Pawn:
@@ -31,7 +32,7 @@ class Space:
         self.isPassant = False
         self.passant_piece = None
     def __str__(self):
-        return f"{self.col}{self.row}: {self.piece}"
+        return f"{self.col}{self.row}: {self.piece} {self.isPassant}"
     def __repr__(self):
-        return f"{self.col}{self.row}: {self.piece}"
+        return f"{self.col}{self.row}: {self.piece} {self.isPassant}"
 

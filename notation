@@ -1,0 +1,16 @@
+Pawn capture
+    exd5
+Bishop capture
+    Bxd5
+Knight capture
+    Nxd5
+King capture
+    Kxd5
+Rook capture
+    Rxd5
+Queen capture
+    Qxd5
+Disambiguating
+    1. file R1d5
+    2. rank Rdd5
+    3. both Rd3d5

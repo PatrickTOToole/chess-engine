@@ -1,11 +1,18 @@
 from chess_engine import *
+import tkinter as tk
 
-gam = GameBoard()
-print(gam)
-move_count = 1
-move_record = {}
-res = False
-while True:
+window = tk.Tk()
+board_frame = tk.Frame()
+gam = GameBoard(board_frame)
+board_frame.pack()
+
+
+
+
+
+def task(move_count, move_record):
+    print(gam)
+    res = False
     move_record[move_count] = []
     while(not res):
         move = input("move (white): ")
@@ -14,7 +21,7 @@ while True:
         if pieceRef == None:
             continue
         target = gam.getSpaceAt(m[1])
-        res = pieceRef.move(Team.WHITE, target)
+        res = pieceRef.move(target)
     move_record[move_count].append(move)
     res = False
     while(not res):
@@ -24,9 +31,13 @@ while True:
         if pieceRef == None:
             continue
         target = gam.getSpaceAt(m[1])
-        res = pieceRef.move(Team.BLACK, target)
+        res = pieceRef.move(target)
     move_record[move_count].append(move)
     res = False
-
     print(gam)
     move_count += 1
+    window.after(0, task, move_count, move_record)
+
+move_record = {}
+window.after(0, task, 0, move_record)
+window.mainloop()

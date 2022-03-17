@@ -18,7 +18,7 @@ class Piece(ABC):
     def can_move(self, target):
         pass
     @abstractmethod
-    def is_passant(self, target):
+    def creates_passant(self, target):
         pass
     @abstractmethod
     def setAttacking(self, target):
@@ -26,17 +26,22 @@ class Piece(ABC):
     @abstractmethod
     def removeAttacking(self, target):
         pass
-    def move(self, team, target):
+    def move(self, target):
         if self.can_move(target):
-            if not self.is_passant(target):
-                self.curr.setPiece(None)
-            else:
-                self.curr.isPassant = True
-                self.curr.passant_piece = self
+            if self.creates_passant(target):
+                inc = 0
+                if self.team == Team.BLACK:
+                    inc = -1
+                else:
+                    inc = 1
+                self.gameboard.board[self.curr.col][int(self.curr.row) + inc].isPassant = True
+                self.gameboard.board[self.curr.col][int(self.curr.row) + inc].passant_piece = self
+            self.curr.setPiece(None)
             self.removeAttacking(self.curr)
             target.setPiece(self)
             self.setAttacking(target)
             self.has_moved = True
+            self.gameboard.updateUI()
             return True
         else:
             return False

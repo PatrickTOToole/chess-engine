@@ -11,20 +11,22 @@ class Pawn(Piece):
             inc = -1
         else:
             inc = 1
+            
+        # Check if it is a valid au Passant
+        if target.isPassant and target.passant_piece.team != self.team and not self.is_pinned:
+            if target.row == self.curr.row + inc and abs(ord(target.col) - ord(self.curr.col)) == 1:
+                return True
+
         # Check if it is a valid standard attack move
         if target.piece != None and target.piece.team != self.team and not self.is_pinned:
             if target.row == self.curr.row + inc and abs(ord(target.col) - ord(self.curr.col)) == 1:
                 if 0 < target.row + inc <= 8 and 97 <= ord(self.curr.col) + ord(target.col) - ord(self.curr.col) < 105:
                     return True
 
-        # Check if it is a valid au Passant
-        if self.is_passant(target):
-            return True
 
         # Check if it is a valid 2 step move
-        if not self.has_moved and target.col == self.curr.col and target.row == self.curr.row + 2*inc:
-            if 0 < self.curr.row + 2*inc <= 8:
-                return True
+        if self.creates_passant(target):
+            return True
         
         # Check if it is a valid 1 step move
         if target.col == self.curr.col and target.row == self.curr.row + inc and target.piece == None:
@@ -58,14 +60,14 @@ class Pawn(Piece):
                 self.gameboard.board[chr(ord(target.col)+1)][target.row + inc].isAttacked = False
 
 
-    def is_passant(self, target):
+    def creates_passant(self, target):
         inc = 0
         if self.team == Team.BLACK:
             inc = -1
         else:
             inc = 1
-        if target.isPassant and target.piece.team != self.team and not self.is_pinned:
-            if target.row == self.curr.row + inc and abs(ord(target.col) - ord(self.curr.col)) == 1:
+        if not self.has_moved and target.col == self.curr.col and target.row == self.curr.row + 2*inc:
+            if 0 < self.curr.row + 2*inc <= 8:
                 return True
         return False
     def __str__(self):

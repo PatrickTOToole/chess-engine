@@ -16,10 +16,10 @@ class Piece(ABC):
     
     @abstractmethod
     def can_move(self, target):
-        pass
+        return False
     @abstractmethod
     def creates_passant(self, target):
-        pass
+        return False
     @abstractmethod
     def is_passant(self, target):
         pass

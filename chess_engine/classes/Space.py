@@ -79,4 +79,3 @@ class Space:
             return f"{self.col}: {self.isPassant}"
         else:
             return f"{self.col}: {self.isPassant}"
-

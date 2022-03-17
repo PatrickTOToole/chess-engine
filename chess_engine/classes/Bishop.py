@@ -18,3 +18,4 @@ class Bishop(Piece):
         return self.team_str + "B"
     def __repr__(self):
         return "B"
+        

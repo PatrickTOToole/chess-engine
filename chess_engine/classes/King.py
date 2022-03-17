@@ -18,3 +18,4 @@ class King(Piece):
         return self.team_str + "K"
     def __repr__(self):
         return "K"
+        

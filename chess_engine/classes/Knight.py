@@ -18,3 +18,4 @@ class Knight(Piece):
         return self.team_str + "N"
     def __repr__(self):
         return "N"
+        

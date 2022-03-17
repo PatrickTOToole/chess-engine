@@ -1,10 +1,12 @@
 from chess_engine import *
 import tkinter as tk
+import sys
 
 window = tk.Tk()
 board_frame = tk.Frame()
 gameboard = GameBoard(board_frame)
 board_frame.pack()
+logfile = open("log", "w+")
 
 def doMove(move_count, move_record, team):
     res = False
@@ -27,15 +29,16 @@ def doMove(move_count, move_record, team):
             gameboard.passant = None
     print(gameboard)
     if team == Team.BLACK:
+        logfile.write(f"{move_count}: {move_record[move_count][0]} {move_record[move_count][1]}\n")
         move_count += 1
     return move_count, move_record
 
 def task(move_count, move_record):
     move_record[move_count] = []
-    doMove(move_count, move_record, Team.WHITE)
-    doMove(move_count, move_record, Team.BLACK)
+    move_count, move_record = doMove(move_count, move_record, Team.WHITE)
+    move_count, move_record = doMove(move_count, move_record, Team.BLACK)
     window.after(0, task, move_count, move_record)
 
 move_record = {}
-window.after(0, task, 0, move_record)
+window.after(0, task, 1, move_record)
 window.mainloop()

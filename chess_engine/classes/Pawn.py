@@ -19,7 +19,7 @@ class Pawn(Piece):
         # Check if it is a valid standard attack move
         if target.piece != None and target.piece.team != self.team and not self.is_pinned:
             if target.row == self.curr.row + inc and abs(ord(target.col) - ord(self.curr.col)) == 1:
-                if 0 < target.row + inc <= 8 and 97 <= ord(self.curr.col) + ord(target.col) - ord(self.curr.col) < 105:
+                if 0 < target.row <= 8 and 97 <= ord(self.curr.col) + ord(target.col) - ord(self.curr.col) < 105:
                     return True
 
 

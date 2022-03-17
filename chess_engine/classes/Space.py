@@ -1,5 +1,10 @@
 from chess_engine.util import Team
 from chess_engine.classes import Pawn
+from chess_engine.classes import Knight
+from chess_engine.classes import Queen
+from chess_engine.classes import Rook
+from chess_engine.classes import Bishop
+
 
 class Space:
     def __init__(self, col, row, color, gameboard):
@@ -12,21 +17,43 @@ class Space:
         self.gameboard = gameboard
 
     def setPiece(self, piece):
-        if piece != None and piece.team == Team.BLACK and type(piece) == Pawn:
-            if self.row == 1:
-                options = {}
-                input("Select N (knight), R (rook), B (bishop), Q (queen)")
+        # if piece != None and piece.team == Team.BLACK and type(piece) == Pawn:
+        #     if self.row == 1:
+        #         options = {}
+        #         sel = input("Select N (knight), R (rook), B (bishop), Q (queen)")
                 
-                raise Exception("PROMOTION UNIMPLEMENTED")
-        if piece != None and piece.team == Team.WHITE and type(piece) == Pawn:
-            if self.row == 8:
-                options = {}
-                input("Select N (knight), R (rook), B (bishop), Q (queen)")
+        #         raise Exception("PROMOTION UNIMPLEMENTED")
+        # if piece != None and piece.team == Team.WHITE and type(piece) == Pawn:
+        #     if self.row == 8:
+        if piece != None and type(piece) == Pawn:
+            if piece.team == Team.BLACK:
+                row = 1
+            else:
+                row = 8
+            if self.row == row:
+                options = {
+                    "N": Knight(piece.team, self, self.gameboard),
+                    "R": Rook(piece.team, self, self.gameboard),
+                    "B": Bishop(piece.team, self, self.gameboard),
+                    "Q": Queen(piece.team, self, self.gameboard),
+                    }
+                sel = input("Select N (knight), R (rook), B (bishop), Q (queen)")
+                piece = options[sel]
                 
-                raise Exception("PROMOTION UNIMPLEMENTED")
         self.piece = piece
         if piece != None:
             piece.curr = self
+    def onPromote(self, piece):
+        if piece != None and piece.team == Team.WHITE and type(piece) == Pawn:
+            if piece.team == Team.BLACK:
+                row = 1
+            else:
+                row = 8
+            if self.row == row:
+                options = {}
+                sel = input("Select N (knight), R (rook), B (bishop), Q (queen)")
+                
+                raise Exception("PROMOTION UNIMPLEMENTED")
 
     def onPassant(self, attacker):
         inc = 0

@@ -6,9 +6,9 @@ import tkinter as tk
 class GameBoard:
     def __init__(self, frame):
         self.elts = {}
-
+        self.passant = None
         for i in range(8):
-            new_arr = {}
+            tk_arr = {}
             for j in range(1,9):
                 rank = i % 2
                 file = j % 2
@@ -16,24 +16,10 @@ class GameBoard:
                 bg_curr = "brown"
                 if color:
                     bg_curr = "tan"
-                label = tk.Label(master=frame, text="hello", bg=bg_curr, width = 5, height=2)
+                label = tk.Label(master=frame, text="", bg=bg_curr, width = 5, height=2)
                 label.grid(row = 8-(j - 1) , column = i)
-                new_arr[j] = label
-            self.elts[chr(97 + i)] = new_arr
-        # for i in range(8):
-        #     elts.append([])
-        #     for j in range(1,9):
-        #         rank = i % 2
-        #         file = j % 2
-        #         color = (rank + file) % 2
-        #         bg_curr = "brown"
-        #         if color:
-        #             bg_curr = "tan"
-        #         label = tk.Label(master=frame, text="hello", bg=bg_curr, width = 5, height=2)
-        #         label.grid(row = i, column = (j - 1))
-        #         elts[i].append(label)
-        # elts[2][2].config(text = "goodb")
-        # self.elts = elts
+                tk_arr[j] = label
+            self.elts[chr(97 + i)] = tk_arr
         self.frame = frame
         self.board = {}
         for i in range(8):
@@ -42,7 +28,7 @@ class GameBoard:
                 rank = i % 2
                 file = j % 2
                 color = (rank + file) % 2
-                new_arr[j] = Space(chr(97 + i), j, color)
+                new_arr[j] = Space(chr(97 + i), j, color, self)
             self.board[chr(97 + i)] = new_arr
         for i in range(8):
             self.board[chr(97 + i)][2].piece = Pawn(Team.WHITE, self.board[chr(97 + i)][2], self)
@@ -53,7 +39,10 @@ class GameBoard:
     def updateUI(self):
         for i in range(8):
             for j in range(1,9):
-                self.elts[chr(97 + i)][j].config(text = str(self.board[chr(97 + i)][j].piece))
+                pz = str(self.board[chr(97 + i)][j].piece)
+                if pz == "None":
+                    pz = ""
+                self.elts[chr(97 + i)][j].config(text = pz)
 
 
     def getPieceAt(self, notation: str):

@@ -21,12 +21,17 @@ class Piece(ABC):
     def creates_passant(self, target):
         pass
     @abstractmethod
+    def is_passant(self, target):
+        pass
+    @abstractmethod
     def setAttacking(self, target):
         pass
     @abstractmethod
     def removeAttacking(self, target):
         pass
     def move(self, target):
+        if self.is_pinned:
+            return False
         if self.can_move(target):
             if self.creates_passant(target):
                 inc = 0
@@ -36,6 +41,12 @@ class Piece(ABC):
                     inc = 1
                 self.gameboard.board[self.curr.col][int(self.curr.row) + inc].isPassant = True
                 self.gameboard.board[self.curr.col][int(self.curr.row) + inc].passant_piece = self
+                if self.gameboard.passant != None:
+                    self.gameboard.passant.resetPassant()
+                self.gameboard.passant = self.gameboard.board[self.curr.col][int(self.curr.row) + inc]
+            if self.is_passant(target):
+                target.onPassant(self)
+
             self.curr.setPiece(None)
             self.removeAttacking(self.curr)
             target.setPiece(self)

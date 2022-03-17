@@ -11,11 +11,10 @@ class Pawn(Piece):
             inc = -1
         else:
             inc = 1
-            
+
         # Check if it is a valid au Passant
-        if target.isPassant and target.passant_piece.team != self.team and not self.is_pinned:
-            if target.row == self.curr.row + inc and abs(ord(target.col) - ord(self.curr.col)) == 1:
-                return True
+        if self.is_passant(target):
+            return True
 
         # Check if it is a valid standard attack move
         if target.piece != None and target.piece.team != self.team and not self.is_pinned:
@@ -68,6 +67,16 @@ class Pawn(Piece):
             inc = 1
         if not self.has_moved and target.col == self.curr.col and target.row == self.curr.row + 2*inc:
             if 0 < self.curr.row + 2*inc <= 8:
+                return True
+        return False
+    def is_passant(self, target):
+        inc = 0
+        if self.team == Team.BLACK:
+            inc = -1
+        else:
+            inc = 1
+        if target.isPassant and target.passant_piece.team != self.team and not self.is_pinned:
+            if target.row == self.curr.row + inc and abs(ord(target.col) - ord(self.curr.col)) == 1:
                 return True
         return False
     def __str__(self):

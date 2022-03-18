@@ -5,10 +5,9 @@ from chess_engine.classes import King
 from chess_engine.classes import Rook
 from chess_engine.classes import Bishop
 from chess_engine.classes import Knight
-
 from chess_engine.util.Team import Team
-import tkinter as tk
 
+import tkinter as tk
 
 def toChr(num):
     return chr(96 + num)

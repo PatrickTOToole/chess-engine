@@ -1,8 +1,6 @@
-from glob import glob
-from operator import is_
+
 from chess_engine import *
 import tkinter as tk
-import sys
 
 window = tk.Tk()
 board_frame = tk.Frame()
@@ -35,13 +33,17 @@ def doMove(team, moveNot):
         return move_count, move_record, False
     target = gameboard.getSpaceAt(m[1])
     res, cap = pieceRef.move(target)
+    if not res:
+        return move_count, move_record, False
+
     if cap:
         mid = "x"
     else:
         mid = "-"
-    print(move_record[move_count], team == Team.BLACK)
 
     move_record[move_count].append(m[0] + mid + m[1])
+    print(move_record, team == Team.BLACK)
+
     if gameboard.passant != None and gameboard.passant.passant_piece != None:
         if gameboard.passant.passant_piece.team != team:
             gameboard.passant.resetPassant()
@@ -67,11 +69,13 @@ def task():
         moveNot = f"{p1}-{p2}"
         if is_white:
             move_count, move_record, res = doMove(Team.WHITE, moveNot)
-            is_white = False
+            if res != False:
+                is_white = False
         else:
             move_count, move_record, res = doMove(Team.BLACK, moveNot)
-            move_record[move_count] = []
-            is_white = True
+            if res != False:
+                is_white = True
+                move_record[move_count] = []
 
         window.after(0, task)
 

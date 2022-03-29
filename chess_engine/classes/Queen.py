@@ -5,10 +5,11 @@ from chess_engine.util import Team
 
 class Queen(Piece):
     def can_move(self, target):
-        space, can_line = self.cast_line(target)
+        line_space, can_line = self.cast_line(target)
+        diag_space, can_diag = self.cast_diagonal(target)
 
         # Checks Bishop Move
-        if abs(ord(self.curr.col) - ord(target.col)) - abs(self.curr.row - target.row) == 0:
+        if can_diag and abs(ord(self.curr.col) - ord(target.col)) - abs(self.curr.row - target.row) == 0:
             if target.piece == None:
                 return True, False
             if target.piece.team != self.team:

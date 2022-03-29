@@ -49,8 +49,8 @@ class Piece(ABC):
 
         spaces = []
         return None, True
-    def cast_diagonal(self):
-        return False
+    def cast_diagonal(self, target):
+        return None, True
     @abstractmethod
     def creates_passant(self, target):
         return False

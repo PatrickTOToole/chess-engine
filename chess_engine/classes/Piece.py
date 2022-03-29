@@ -17,12 +17,38 @@ class Piece(ABC):
     @abstractmethod
     def can_move(self, target):
         return False, False
-    def cast_line(self, dir):
-        axis = dir[0]
-        vect = dir[1]
+    def cast_line(self, target):
+        dir = [0,0]
+        if target.col == self.curr.col and target.row != self.curr.row:
+            dir = [1, target.row - self.curr.row]
+        elif target.row == self.curr.row:
+            dir = [-1, ord(target.col)- ord(self.curr.col)]
         curr_check = [ord(self.curr.col), self.curr.row]
+        if dir[0] == 0: return None, False
+        dir_num = 0
+        if dir[1] > 0:
+            dir_num = 1
+        else:
+            dir_num = -1
+        if dir[0] == 1:
+            while curr_check[1] != target.row - dir_num:
+                curr_check[1] = curr_check[1] + dir_num
+                curr_space = self.gameboard.board[chr(curr_check[0])][curr_check[1]]
+                curr_piece = curr_space.piece
+                if curr_piece != None:
+                    return curr_space, False
+
+        else:
+            while curr_check[0] != ord(target.col) - dir_num:
+                curr_check[0] = curr_check[0] + dir_num
+                curr_space = self.gameboard.board[chr(curr_check[0])][curr_check[1]]
+                curr_piece = curr_space.piece
+                if curr_piece != None:
+                    return curr_space, False
+
+
         spaces = []
-        return False
+        return None, True
     def cast_diagonal(self):
         return False
     @abstractmethod

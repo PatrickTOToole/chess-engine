@@ -5,6 +5,8 @@ from chess_engine.util import Team
 
 class Queen(Piece):
     def can_move(self, target):
+        space, can_line = self.cast_line(target)
+
         # Checks Bishop Move
         if abs(ord(self.curr.col) - ord(target.col)) - abs(self.curr.row - target.row) == 0:
             if target.piece == None:
@@ -13,6 +15,9 @@ class Queen(Piece):
                 return True, True
             else:
                 return False, False
+        # Checks Rook Move
+        elif not can_line:
+            return False, False
         elif abs(ord(self.curr.col) - ord(target.col)) != 0 and abs(self.curr.row - target.row) == 0:
             if target.piece == None:
                 return True, False
@@ -29,6 +34,7 @@ class Queen(Piece):
                 return False, False
         else:
             return False, False
+
     def creates_passant(self, target):
         return super().creates_passant(target)
     def is_passant(self, target):

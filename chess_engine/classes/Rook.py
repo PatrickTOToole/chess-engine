@@ -5,7 +5,22 @@ from chess_engine.util import Team
 
 class Rook(Piece):
     def can_move(self, target):
-        return super().can_move(target)
+        if abs(ord(self.curr.col) - ord(target.col)) != 0 and abs(self.curr.row - target.row) == 0:
+            if target.piece == None:
+                return True, False
+            if target.piece.team != self.team:
+                return True, True
+            else:
+                return False, False
+        elif abs(ord(self.curr.col) - ord(target.col)) == 0 and abs(self.curr.row - target.row) != 0:
+            if target.piece == None:
+                return True, False
+            if target.piece.team != self.team:
+                return True, True
+            else:
+                return False, False
+        else:
+            return False, False
     def creates_passant(self, target):
         return super().creates_passant(target)
     def is_passant(self, target):

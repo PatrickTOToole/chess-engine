@@ -17,12 +17,20 @@ class Piece(ABC):
     @abstractmethod
     def can_move(self, target):
         return False, False
+    def cast_line(self, dir):
+        axis = dir[0]
+        vect = dir[1]
+        curr_check = [ord(self.curr.col), self.curr.row]
+        spaces = []
+        return False
+    def cast_diagonal(self):
+        return False
     @abstractmethod
     def creates_passant(self, target):
         return False
     @abstractmethod
     def is_passant(self, target):
-        pass
+        return False
     @abstractmethod
     def setAttacking(self, target):
         pass

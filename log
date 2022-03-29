@@ -1,10 +1,5 @@
-1: e2-e4 d7-d5
-2: e4xd5 c7-c6
-3: d5xc6 a7-a5
-4: c6xb7 a5-a4
-5: b7xa8 a4-a3
-6: b2-b4 e7-e5
-7: b4-b5 e5-e4
-8: b5-b6 e4-e3
-9: b6-b7 e3xf2
-10: b7xc8 f2xe1
+1: e2-e4 e7-e5
+2: d1-e2 d7-d6
+3: e2-e3 d6-d5
+4: e3-f3 d5-d4
+5: f3-e3 d4xe3

@@ -5,7 +5,17 @@ from chess_engine.util import Team
 
 class King(Piece):
     def can_move(self, target):
-        return super().can_move(target)
+        col_diff = abs(ord(self.curr.col) - ord(target.col))
+        row_diff = abs(self.curr.row - target.row)
+        if col_diff + row_diff == 1 or col_diff == row_diff == 1:
+            # TODO
+            if target.piece == None:
+                return True, False
+            if target.piece.team != self.team:
+                return True, True
+            else:
+                return False, False
+        return False, False
     def creates_passant(self, target):
         return super().creates_passant(target)
     def is_passant(self, target):

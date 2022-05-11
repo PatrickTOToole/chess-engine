@@ -46,7 +46,7 @@ class GameBoard:
                 #test = ImageTk.PhotoImage(image1)
                 #label = tk.Label(image=test)
                 #label = tk.Label(master=frame, text="", bg=bg_curr, width = 5, height=2)
-                label = tk.Label(master=frame, bg=bg_curr)
+                label = tk.Label(master=frame, bg=bg_curr)#, width = 5, height=2)
                 wlabel = objWrapper(label, i, j, self.move)
                 wlabel.obj.callback = wlabel.callback
                 wlabel.obj.bind("<Button-1>", wlabel.obj.callback)
@@ -90,7 +90,7 @@ class GameBoard:
     def addPiece(self, pc, i, j):
         self.board[self.toChr(i)][j].piece = pc
         self.elts[self.toChr(i)][j].obj.config(text = str(pc))
-        test = PhotoImage(file = f"./assets/{str(pc)}.png")#.subsample(2, 2)
+        test = PhotoImage(file = f"./assets/{str(pc)}.png")
         self.elts[self.toChr(i)][j].obj.config(image = test)
         self.elts[self.toChr(i)][j].obj.image = test
 
@@ -102,7 +102,12 @@ class GameBoard:
                 pz = str(self.board[self.toChr(i)][j].piece)
                 if pz == "None":
                     pz = ""
+                    self.elts[self.toChr(i)][j].obj.config(image = None)
                 self.elts[self.toChr(i)][j].obj.config(text = pz)
+                if pz != "":
+                    test = PhotoImage(file = f"./assets/{str(pz)}.png")
+                    self.elts[self.toChr(i)][j].obj.config(image = test)
+                    self.elts[self.toChr(i)][j].obj.image = test
 
 
     def getPieceAt(self, notation: str):

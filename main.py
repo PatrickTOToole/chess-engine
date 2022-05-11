@@ -3,12 +3,14 @@ from chess_engine import *
 import tkinter as tk
 
 window = tk.Tk()
+window.title("Chess")
 board_frame = tk.Frame()
 class moveWrapper:
     def __init__(self):
         self.move = []
 mov = moveWrapper()
 gameboard = GameBoard(board_frame, mov, window)
+board_frame
 board_frame.pack()
 is_white = True
 logfile = open("log", "w+")

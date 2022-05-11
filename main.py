@@ -8,7 +8,7 @@ class moveWrapper:
     def __init__(self):
         self.move = []
 mov = moveWrapper()
-gameboard = GameBoard(board_frame, mov)
+gameboard = GameBoard(board_frame, mov, window)
 board_frame.pack()
 is_white = True
 logfile = open("log", "w+")
@@ -20,13 +20,6 @@ def doMove(team, moveNot):
     cap = False
     global move_count
     global move_record
-    # while(not res):
-        # if team == Team.BLACK:
-        #     team_str = "black"
-        # else:
-        #     team_str = "white"
-        #move = input(f"move ({team_str}): ")
-
     m = moveNot.split("-")
     pieceRef = gameboard.getPieceAt(str(m[0]))
     if pieceRef == None or pieceRef.team != team:

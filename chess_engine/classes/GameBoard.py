@@ -8,6 +8,8 @@ from chess_engine.classes import Knight
 from chess_engine.util.Team import Team
 
 import tkinter as tk
+from tkinter import *
+from PIL import Image, ImageTk
 
 def toChr(num):
     return chr(96 + num)
@@ -20,16 +22,16 @@ class objWrapper:
         self.mov = move
     def callback(self, event):
         self.mov.move.append(f"{toChr(self.col)}{self.row}")
-        print("hi")
         print(self.mov.move)
 
 class GameBoard:
-    def __init__(self, frame, move):
+    def __init__(self, frame, move, root):
         self.elts = {}
         self.board = {}
         self.frame = frame
         self.passant = None
         self.move = move
+        self.root = root
         for i in range(1,9):
             tk_arr = {}
             new_arr = {}
@@ -41,7 +43,10 @@ class GameBoard:
                 bg_curr = "brown"
                 if color:
                     bg_curr = "tan"
-                label = tk.Label(master=frame, text="", bg=bg_curr, width = 5, height=2)
+                #test = ImageTk.PhotoImage(image1)
+                #label = tk.Label(image=test)
+                #label = tk.Label(master=frame, text="", bg=bg_curr, width = 5, height=2)
+                label = tk.Label(master=frame, bg=bg_curr)
                 wlabel = objWrapper(label, i, j, self.move)
                 wlabel.obj.callback = wlabel.callback
                 wlabel.obj.bind("<Button-1>", wlabel.obj.callback)
@@ -85,6 +90,11 @@ class GameBoard:
     def addPiece(self, pc, i, j):
         self.board[self.toChr(i)][j].piece = pc
         self.elts[self.toChr(i)][j].obj.config(text = str(pc))
+        test = PhotoImage(file = f"./assets/{str(pc)}.png")#.subsample(2, 2)
+        self.elts[self.toChr(i)][j].obj.config(image = test)
+        self.elts[self.toChr(i)][j].obj.image = test
+
+
 
     def updateUI(self):
         for i in range(1,9):

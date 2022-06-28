@@ -17,14 +17,6 @@ class Space:
         self.gameboard = gameboard
 
     def setPiece(self, piece):
-        # if piece != None and piece.team == Team.BLACK and type(piece) == Pawn:
-        #     if self.row == 1:
-        #         options = {}
-        #         sel = input("Select N (knight), R (rook), B (bishop), Q (queen)")
-                
-        #         raise Exception("PROMOTION UNIMPLEMENTED")
-        # if piece != None and piece.team == Team.WHITE and type(piece) == Pawn:
-        #     if self.row == 8:
         if piece != None and type(piece) == Pawn:
             if piece.team == Team.BLACK:
                 row = 1

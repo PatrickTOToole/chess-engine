@@ -50,7 +50,29 @@ class Piece(ABC):
         spaces = []
         return None, True
     def cast_diagonal(self, target):
-        return None, True
+        dir = [0,0]
+        dir[0] = ord(target.col) - ord(self.curr.col)
+        dir[1] = target.row - self.curr.row
+        if abs(dir[0]) != abs(dir[1]):
+            return 0, False
+        else:
+            if abs(dir[0]) == 1:
+                return 0, True
+            dir[0] = int(dir[0] / abs(dir[0]))
+            dir[1] = int(dir[1] / abs(dir[1]))
+            curr_check = [ord(self.curr.col), self.curr.row]
+            while curr_check[0] != ord(target.col) and curr_check[1] != target.row:
+                curr_check[0] += dir[0]
+                curr_check[1] += dir[1]
+                curr_space = self.gameboard.board[chr(curr_check[0])][curr_check[1]]
+                curr_piece = curr_space.piece
+                if curr_piece != None:
+                    return curr_space, False
+
+            print(dir)
+            return 0, True
+
+        
     @abstractmethod
     def creates_passant(self, target):
         return False

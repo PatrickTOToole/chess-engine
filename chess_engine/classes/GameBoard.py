@@ -82,6 +82,7 @@ class GameBoard:
 
         self.addPiece(Rook(Team.WHITE, self.board["h"][1], self), 8, 1)
         self.addPiece(Rook(Team.BLACK, self.board["h"][8], self), 8, 8)
+        self.updateUI()
     
     def toChr(self, num):
         return chr(96 + num)
@@ -100,14 +101,17 @@ class GameBoard:
         for i in range(1,9):
             for j in range(1,9):
                 pz = str(self.board[self.toChr(i)][j].piece)
+                self.elts[self.toChr(i)][j].obj.config(text = pz)
                 if pz == "None":
                     pz = ""
-                    self.elts[self.toChr(i)][j].obj.config(image = None)
-                self.elts[self.toChr(i)][j].obj.config(text = pz)
+                    test = PhotoImage(file = "./assets/empty.png")
+                    self.elts[self.toChr(i)][j].obj.config(image = test)
+                    self.elts[self.toChr(i)][j].obj.image = test
                 if pz != "":
                     test = PhotoImage(file = f"./assets/{str(pz)}.png")
                     self.elts[self.toChr(i)][j].obj.config(image = test)
                     self.elts[self.toChr(i)][j].obj.image = test
+
 
 
     def getPieceAt(self, notation: str):

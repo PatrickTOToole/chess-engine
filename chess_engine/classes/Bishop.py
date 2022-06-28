@@ -5,7 +5,9 @@ from chess_engine.util import Team
 
 class Bishop(Piece):
     def can_move(self, target):
-        if abs(ord(self.curr.col) - ord(target.col)) - abs(self.curr.row - target.row) == 0:
+        diag_space, can_diag = self.cast_diagonal(target)
+
+        if can_diag and abs(ord(self.curr.col) - ord(target.col)) - abs(self.curr.row - target.row) == 0:
             if target.piece == None:
                 return True, False
             if target.piece.team != self.team:
